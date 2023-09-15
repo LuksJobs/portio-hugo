@@ -1,0 +1,35 @@
+[build]
+  command = "hugo serve"
+  publish = "public"
+
+[[plugins]]
+  package = "@netlify/plugin-hugo"
+
+[[plugins.inputs]]
+  name = "version"
+  value = "0.88"
+
+[[plugins.inputs]]
+  name = "extended"
+  value = true
+
+# Adicione o tema como um submódulo
+[[plugins]]
+  package = "@netlify/plugin-submodule"
+  [plugins.inputs]
+    path = "themes/portio"
+    url = "https://github.com/StaticMania/portio-hugo"
+
+# Copie os arquivos do exemploSite para o diretório raiz
+[[plugins]]
+  package = "@netlify/plugin-exec"
+  [plugins.inputs]
+    command = "cp -a themes/portio/exampleSite/* ."
+    cwd = "themes/portio"
+
+# Certifique-se de que os arquivos estejam no commit
+[[plugins]]
+  package = "@netlify/plugin-git"
+  [plugins.inputs]
+    command = "add ."
+    commit = "Copied exampleSite files"
